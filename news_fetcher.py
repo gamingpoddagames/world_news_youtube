@@ -10,6 +10,6 @@ def get_headlines():
     headlines = []
     for feed in RSS_FEEDS:
         parsed = feedparser.parse(feed)
-        for entry in parsed.entries[:3]:  # smaller for GitHub Actions limits
+        for entry in parsed.entries[:3]:  # limit for GitHub Actions
             headlines.append(entry.title)
     return headlines
