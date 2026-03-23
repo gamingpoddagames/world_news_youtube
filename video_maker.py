@@ -6,11 +6,13 @@ VOICE_DIR = "voice_clips"
 OUTPUT_DIR = "videos"
 
 def make_videos(headlines):
-    os.makedirs(OUTPUT_DIR, exist_ok=True)
+    if not os.path.exists(OUTPUT_DIR):
+        os.makedirs(OUTPUT_DIR)
+    
     for idx, headline in enumerate(headlines):
         stock_category = random.choice(os.listdir(STOCK_DIR))
         video_file = random.choice(os.listdir(os.path.join(STOCK_DIR, stock_category)))
-        clip = VideoFileClip(os.path.join(STOCK_DIR, stock_category, video_file)).subclip(0,5)  # short clip
+        clip = VideoFileClip(os.path.join(STOCK_DIR, stock_category, video_file)).subclip(0,5)
 
         txt_clip = TextClip(headline, fontsize=30, color='white', bg_color='black', size=clip.size)
         txt_clip = txt_clip.set_duration(clip.duration).set_position('bottom')
