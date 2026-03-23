@@ -1,9 +1,8 @@
 name: Automated News Videos
 
-# Trigger every hour + manual trigger
 on:
   schedule:
-    - cron: '0 * * * *'   # Every hour
+    - cron: '0 * * * *'   # every hour
   workflow_dispatch:
 
 jobs:
@@ -11,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the repository
+      # Step 1: Checkout repository
       - name: Checkout Repo
         uses: actions/checkout@v3
 
@@ -21,11 +20,11 @@ jobs:
         with:
           python-version: '3.10'
 
-      # Step 3: Install system dependencies (ffmpeg for MoviePy)
+      # Step 3: Install system dependencies (only ffmpeg)
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y ffmpeg libav-tools
+          sudo apt-get install -y ffmpeg
 
       # Step 4: Install Python dependencies
       - name: Install Python packages
@@ -37,6 +36,6 @@ jobs:
       - name: Test MoviePy
         run: python -c "from moviepy.editor import VideoFileClip; print('MoviePy OK')"
 
-      # Step 6: Run the news video pipeline
+      # Step 6: Run news video pipeline
       - name: Run News Video Pipeline
         run: python run_pipeline.py
